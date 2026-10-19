@@ -1,8 +1,8 @@
 CC	:= gcc
 STD := -std=c11 -D_POSIX_C_SOURCE=200809L
-WARN := -Wall -Wextra -Wpendatic
-OPT ?= -O0 -g
-SAN ?= -fsanitize=address,undefined
+WARN := -Wall -Wextra -Wpedantic
+OPT ?= -O0 -g	# removes optimization, makes C closer to machine code. Also -g adds debug info to compilation output
+SAN ?= -fsanitize=address,undefined # detects memory error like accessing memory after freeing or reading outside buffer
 CFLAGS := $(STD) $(WARN) $(OPT) $(SAN) -fno-omit-frame-pointer -MMD -MP
 LDFLAGS := $(SAN)
 
