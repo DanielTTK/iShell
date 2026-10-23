@@ -18,23 +18,23 @@ TESTS := $(patsubst tests/%.c,$(BUILD)/%,$(wildcard tests/tests_*.c))
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-$(CC) $(OBJS) -o $@ $(LDFLAGS)
+	$(CC) $(OBJS) -o $@ $(LDFLAGS)
 
-$(BUILD)/%.o: src/%.c | $(BUILD) # | is a pipe, sends cmd1 output as a input to cmd2 in the following example: cmd1 | cmd2
-$(CC) $(CFLAGS) -Isrc tests/test_$*.c $(LIB_OBJS) -o $@ $(LDFLAGS)
+#$(BUILD)/%.o: src/%.c | $(BUILD) # | is a pipe, sends cmd1 output as a input to cmd2 in the following example: cmd1 | cmd2
+#	$(CC) $(CFLAGS) -Isrc tests/test_$*.c $(LIB_OBJS) -o $@ $(LDFLAGS)
 
 $(BUILD):
-mkdir -p $(BUILD)
+	mkdir -p $(BUILD)
 
 test-unit: $(TESTS)
-@for t in $(TESTS); do echo "== $$t"; ./$$t || exit 1; done
+	@for t in $(TESTS); do echo "== $$t"; ./$$t || exit 1; done
 
 test-integration: $(TARGET)
-./tests/run_integration.sh
+	./tests/run_integration.sh
 
 test: test-unit test-integration
 
 clean:
-rm -rf $(BUILD) $(TARGET)
+	rm -rf $(BUILD) $(TARGET)
 
 -include $(OBJS: .o=.d)
